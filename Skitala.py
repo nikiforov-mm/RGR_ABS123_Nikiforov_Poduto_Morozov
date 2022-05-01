@@ -18,4 +18,9 @@ lenght = len(text)
 print ("Enter key: ")
 count_string = int(input())
 count_colum = int(((lenght - 1) / count_string) + 1)
-encode (text, lenght, count_string, count_colum)
+print ("To encrypt - press 1, to decrypt - press 0")
+button = int(input ())
+if button == int("1"):
+	encode (text, lenght, count_string, count_colum)
+if button == int("0"):
+	decode (text, lenght, count_string, count_colum)
