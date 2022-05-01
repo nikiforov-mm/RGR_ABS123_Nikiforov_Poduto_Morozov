@@ -1,10 +1,10 @@
 def encode (text, lenght, count_string, count_colum):
-    cipher_text = [None] * lenght
+    encrypted_text = [None] * lenght
     for i in range(0, lenght):
         index = int(count_string * (i % count_colum) + (i / count_colum))
-        cipher_text[index] = text[i]
-    cipher_text = "".join(cipher_text)
-    print ("Encode: ", cipher_text)
+        encrypted_text[index] = text[i]
+    encrypted_text = "".join(encrypted_text)
+    print ("Encrypted text: ", encrypted_text)
 
 print ("Enter text: ")
 text = input ()
