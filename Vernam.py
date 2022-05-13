@@ -12,13 +12,9 @@ def encryption(start): #функция шифрования
 def decryption(encoded_text, key): #функция расшифрования
 	decoded_text =""
 	lenght = len(encoded_text);
-	ntry = 0
-	while (ntry != 1): 
-		key = input ()
+	while 1: 
 		if len(key) == lenght:
 			for i in range(lenght):
 				decoded_text += chr(ord(encoded_text[i]) ^ ord(key[i]))
-			ntry = 1
 			return decoded_text
-		else:
-			print ("Invalid key, try again")
+
