@@ -1,8 +1,6 @@
-def encode (start):
+def encode (start, count_string):
     lenght = len(start)
     encrypted_text = [None] * lenght
-    print ("Enter key: ")
-    count_string = int(input())
     count_colum = int(((lenght - 1) / count_string) + 1)    
     for i in range(0, lenght):
         index = int(count_string * (i % count_colum) + (i / count_colum))
