@@ -1,37 +1,24 @@
 #Шифр Вернама является разновидностью криптосистемы одноразовых блокнотов. Основной принцип в создании случайного ключа такой же длины, как шифруемое сообщение. 
 import random
-def encryption(text, lenght): #функция шифрования 
+def encryption(start): #функция шифрования 
 	key =""
-	encode =""
+	lenght = len(start);
+	encoded_text =""
 	for i in range(lenght):
-		key += chr(random.randrange(97, 97+26)) #создание случайного ключа
+		key += chr(random.randrange(1, 65536)) #cоздание случайного ключа
 	for i in range(lenght):
-		encode += chr (ord(text[i]) ^ ord(key[i]))
-	print ("Key: ", key)
-	print ("Encrypted text:", encode)
-def decryption(text, lenght): #функция расшифрования
-	print ("Enter key:")
-	key = input()
-	decode =""
-	ntry = 1
-	while ntry < 10: 
+		encoded_text += chr (ord(start[i]) ^ ord(key[i]))
+	return encoded_text, key
+def decryption(encoded_text, key): #функция расшифрования
+	decoded_text =""
+	lenght = len(encoded_text);
+	ntry = 0
+	while (ntry != 1): 
 		key = input ()
 		if len(key) == lenght:
 			for i in range(lenght):
-				decode += chr(ord(text[i]) ^ ord(key[i]))
-			print ("Decrypted text:", decode)
-			break
+				decoded_text += chr(ord(encoded_text[i]) ^ ord(key[i]))
+			ntry = 1
+			return decoded_text
 		else:
 			print ("Invalid key, try again")
-			ntry = ntry + 1
-print("Enter text:") #ввод текста
-text = ""
-text = input ()
-lenght = len(text);
-print ("To encrypt - press 1, to decrypt - press 0") #выбор операции 
-button = int(input ())
-if button == int("1"):
-	encryption(text, lenght)
-if button == int("0"):
-	decryption(text, lenght)
-	
