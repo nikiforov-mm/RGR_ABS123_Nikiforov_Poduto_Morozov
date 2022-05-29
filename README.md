@@ -12,4 +12,4 @@
 
 Пример работы:
 1. Сменить режим в режим ручного ввода
-![alt text] (https://github.com/nikiforov-mm/RGR_ABS123_Nikiforov_Poduto_Morozov/blob/main/Picflow/DecryptManual.PNG)
+![alt text] (https://github.com/nikiforov-mm/RGR_ABS123_Nikiforov_Poduto_Morozov/blob/main/Picflow/DecryptManual.PNG?raw=true)
