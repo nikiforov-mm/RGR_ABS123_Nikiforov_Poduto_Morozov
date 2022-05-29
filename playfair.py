@@ -4,7 +4,8 @@ from copy import deepcopy
 
 symbols = "abcdefghijklmnopqrstvuwxyzABCDEFGHIJKLMNOPQRSTVUWXYZ1234567890+-/=_@<>~`,.?!:;'\"\\[{}()-+абвгдеёжзийклмнопрстуфцхчшщъьыэюя" + \
     "АБВГДЕЁЖЗИЙКЛМНОПРСТУФЦХЧШЩЪЬЫЭЮЯ\n\t\v$№êéèçæåäãâ "
-row_len= int(len(symbols) ** 0.5)
+row_len = int(len(symbols) ** 0.5)
+
 
 def playfair_conditions(fli, sli):
     same_col = fli[1] == sli[1]
@@ -89,14 +90,15 @@ def unform_bigramm_no_loss(matr, fli, sli):
         pair = "{}{}".format(matr[fli[0]][fli[1]], matr[fli[0]][fli[1]])
         return pair
 
-def playfair_no_loss_en(string, key=None):
+
+def playfair_no_loss_loop(string, key=None):
     t_string = deepcopy(string)
     private_key = ""
     encrypted = ""
     t_len = len(t_string)
     if t_len % 2 != 0:
         ind_app = int(random.uniform(0, 144))
-        t_string = "{}{}".format(t_string, symbols[ind_app])
+        t_string += symbols[ind_app]
         t_len += 1
     for ind in range(0, int(t_len/2)):
         if key is not None:
@@ -104,13 +106,11 @@ def playfair_no_loss_en(string, key=None):
             junk, matr = shuffle_to_matr(symbols, seed)
         else:
             seed, matr = shuffle_to_matr(symbols)
-        private_key = "{}{}".format(private_key, chr(seed))
+        private_key += chr(seed)
         fli, sli = char_pair_matr(matr, t_string[ind * 2], t_string[ind * 2 + 1])
         bigramm = form_bigramm_no_loss(matr, fli, sli)
-        encrypted = "{}{}".format(encrypted, bigramm)
-    ## pepehands . Костыль
-    if playfair_no_loss_de(encrypted, private_key) != string:
-        encrypted, private_key = playfair_no_loss_en(string)
+        encrypted += bigramm
+
     return encrypted, private_key
 
 
@@ -123,6 +123,13 @@ def playfair_no_loss_de(encrypted, private_key):
         seed, matr = shuffle_to_matr(symbols, seed)
         fli, sli = char_pair_matr(matr, t_string[ind * 2], t_string[ind * 2 + 1])
         unformed = unform_bigramm_no_loss(matr, fli, sli)
-        decrypted = "{}{}".format(decrypted, unformed)
+        decrypted += unformed
     return decrypted
 
+
+# sanity (python random.shuffle doesn't produce same results on some seeds)
+def playfair_no_loss_en(string):
+    encrypted, private_key = playfair_no_loss_loop(string)
+    if playfair_no_loss_de(encrypted, private_key) != string:
+        encrypted, private_key = playfair_no_loss_loop(string)
+    return encrypted, private_key

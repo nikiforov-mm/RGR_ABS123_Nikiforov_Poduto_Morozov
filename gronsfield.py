@@ -43,5 +43,5 @@ def a_basic_de(public_key):
 
 def d_asym_perfect_gronsfield(encrypted, public_key):
     private_key = a_basic_de(public_key)
-    res = perfect_ceasar_de(encrypted, private_key)
+    res = perfect_gronsfield_de(encrypted, private_key)
     return res
