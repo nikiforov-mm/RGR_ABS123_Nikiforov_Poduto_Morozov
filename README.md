@@ -12,6 +12,8 @@
 
 Пример работы:
 1. Запустить программу и выбрать алгоритм шифрования
+
 ![Screenshot](Picflow/MainCompact.png)
 2. Сменить режим в режим ручного ввода
+
 ![Screenshot](Picflow/MainManual.png)
