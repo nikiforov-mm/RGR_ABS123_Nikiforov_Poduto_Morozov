@@ -9,3 +9,7 @@
 Подуто Егор
 
 Начал работу 3 апреля. Реализованы шифр Вернама и Скитала. В процессе реализации шифр Эль-Гамаля.
+
+Пример работы:
+1. Сменить режим в режим ручного ввода
+![alt text] (https://github.com/nikiforov-mm/RGR_ABS123_Nikiforov_Poduto_Morozov/blob/main/Picflow/DecryptManual.PNG)
