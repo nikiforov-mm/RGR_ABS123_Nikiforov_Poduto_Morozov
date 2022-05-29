@@ -291,13 +291,13 @@ class MainWindow(QMainWindow):
             if encrypted in l and key in l:
                 password_l = l
         password = password_l[2]
-        tries = 3
+        tries = 2
         inp = self.password_event(password=password)
         sc = 1
         while (tries > 0):
             if inp != password:
-                inp = self.password_event(password=password)
                 self.notification(F"Incorrect password. {tries} tries remaining.")
+                inp = self.password_event(password=password)
                 tries -= 1
                 sc = 0
             else:
@@ -308,8 +308,15 @@ class MainWindow(QMainWindow):
     def crypt_button(self):
         if not self.ExtendedMode.isChecked():
             if len(self.InputPath.text()) <= 0 or len(self.OutputPath.text()) <= 0:
-                self.notification("Input proper path to file")
+                self.notification("Input proper path to files")
                 return 0
+            else:
+                try:
+                    f = open(self.InputPath.text(), 'r', encoding='utf-8').close()
+                    f = open(self.OutputPath.text(), 'r', encoding='utf-8').close()
+                except:
+                    self.notification("Files do not exist")
+                    return 0
 
             path = self.InputPath.text()
             retrieved_text = self.retrieve_from_input_file(path)
@@ -325,6 +332,17 @@ class MainWindow(QMainWindow):
                 keyfile = open(self.OutputPath.text()[0:len(self.InputPath.text()) - 4] + "_key.txt", "w", encoding="utf-8")
                 keyfile.write(private_key)
             else:
+
+                if len(self.KeyPath.text()) <= 0:
+                    self.notification("Input proper path to key")
+                    return 0
+                else:
+                    try:
+                        f = open(self.KeyPath.text(), 'r', encoding='utf-8').close()
+                    except:
+                        self.notification("Key file does not exist")
+                        return 0
+
                 key = open(self.KeyPath.text(), "r", encoding="utf-8").read()
                 try:
                     pass_check = self.dec_password(retrieved_text, key)
