@@ -289,7 +289,7 @@ class MainWindow(QMainWindow):
         wr = encrypted + "\0" * 15 + key + "\0" * 15
         if not exists("logs.txt") or wr not in f:
             self.notification("Used data wasn't previously created using this program. Ignoring password.")
-            return 0
+            return 1
         passwords = f.split("\0" * 15 + '\n')
         passwords = [x.split('\0' * 15) for x in passwords]
         password_l = []
