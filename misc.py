@@ -26,7 +26,7 @@ infos = [# Gronsfield
          "Scytale cypher shuffles input string in a special manner.\n" + \
          "Cypher doesn't have any restrictions.",
          # Vernam
-         "Vernam's cypher uses bitwise \"and\" for encryption of input string." + \
+         "Vernam's cypher uses bitwise \"xor\" for encryption of input string." + \
          "Cypher doesn't have any restrictions."]
 
 def to_matr(symbols):
