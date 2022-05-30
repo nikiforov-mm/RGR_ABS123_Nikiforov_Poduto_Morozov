@@ -271,7 +271,7 @@ class MainWindow(QMainWindow):
 
     def enc_password(self, encrypted, key):
         if not exists("logs.txt"):
-            f = open("logs.txt", "w", encoding="utf-8").read()
+            f = open("logs.txt", "w", encoding="utf-8")
         f = open("logs.txt", "r", encoding="utf-8")
         f_text = f.read()
         f.close()
