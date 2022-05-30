@@ -31,6 +31,3 @@ def vernam_en(string):
             pass
         if flag:
             return encrypted, key
-
-while True:
-    vernam_en("A" * 100)
