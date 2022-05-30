@@ -7,10 +7,12 @@ import elgamal as eg
 import scytale as sc
 import vernams as vm
 from misc import infos
+from os.path import exists
 from PyQt5.QtWidgets import QMessageBox, QInputDialog, QFileDialog, QApplication,\
     QMainWindow, QWidget, QVBoxLayout, QButtonGroup, QGridLayout, \
     QPushButton, QCheckBox, QLabel, QRadioButton, QLineEdit, QPlainTextEdit
 import sys
+
 
 ciphers = ["Gronsfield", "Playfair", "Table shuffling", "El Gamal", "Scytale", "Vernam"]
 
@@ -268,6 +270,8 @@ class MainWindow(QMainWindow):
             return password
 
     def enc_password(self, encrypted, key):
+        if not exists("logs.txt"):
+            f = open("logs.txt", "w", encoding="utf-8").read()
         f = open("logs.txt", "r", encoding="utf-8")
         f_text = f.read()
         f.close()
@@ -277,11 +281,13 @@ class MainWindow(QMainWindow):
             password = self.password_event()
             wr += (password + "\0" * 15 + '\n')
             f.write(wr)
+        f.close()
 
     def dec_password(self, encrypted, key):
-        f = open("logs.txt", "r", encoding="utf-8").read()
+        if exists("logs.txt"):
+            f = open("logs.txt", "r", encoding="utf-8").read()
         wr = encrypted + "\0" * 15 + key + "\0" * 15
-        if wr not in f:
+        if not exists("logs.txt") or wr not in f:
             self.notification("Used data wasn't previously created using this program. Ignoring password.")
             return 0
         passwords = f.split("\0" * 15 + '\n')
