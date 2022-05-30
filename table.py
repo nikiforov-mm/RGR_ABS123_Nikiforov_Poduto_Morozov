@@ -5,6 +5,8 @@ from misc import to_matr
 shift = 250
 
 def table_shuffling_en(start):
+    if "\\" in start:
+        return "Cannot be encrypted, avoid using \\ in encryption string", chr(1)
     encoded = ""
     t_string = list(start)
     t_len = len(t_string)
@@ -89,8 +91,6 @@ def table_shuffling_de(encoded, private_key):
     for num in range(0, len(shuffle_str)):
         ind = shuffle_str.index(num)
         string = "{}{}".format(string, shuffled_string[ind])
+    string = string.replace("\\", "")
     return string
 
-#out = "PЛбъ#Gя}AЬQМО-eмёИX12Ых^\шЭ`ыК9hДcАWйNpЕzа:5,\ПjиOMщ)ФSнUanI\V/4xqr?gьЙЯYо\[Т7bс\зtЁ\НiDуж8\г@ЩРЧTl\RфdC$еkчF/sB\JвЦwfлЖрВmБ№СEХ*ЮL~(\ЪУЗ_кдyoZт%6Г].цп3Ш\u|ю&v;\=K+э!H{0"
-
-#print(table_shuffling_de(out, key))
