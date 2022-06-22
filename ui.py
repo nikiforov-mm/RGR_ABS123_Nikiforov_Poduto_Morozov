@@ -1,5 +1,4 @@
 from PyQt5.QtCore import Qt, QSize
-from copy import deepcopy
 import table as tb
 import playfair as pf
 import gronsfield as gf
@@ -268,6 +267,8 @@ class MainWindow(QMainWindow):
         password, ok_pressed = QInputDialog.getText(self, "Input password", "Enter password")
         if ok_pressed and len(password) > 0:
             return password
+        else:
+            return ""
 
     def enc_password(self, encrypted, key):
         if not exists("logs.txt"):
@@ -279,9 +280,13 @@ class MainWindow(QMainWindow):
         wr = encrypted + "\0" * 15 + key + "\0" * 15
         if wr not in f_text:
             password = self.password_event()
+            if len(password) == 0:
+                self.notification("Password should be of positive len.")
+                return 0
             wr += (password + "\0" * 15 + '\n')
             f.write(wr)
         f.close()
+        return 1
 
     def dec_password(self, encrypted, key):
         if exists("logs.txt"):
@@ -332,13 +337,14 @@ class MainWindow(QMainWindow):
                 except:
                     self.call_error()
                     return 0
-                self.enc_password(encoded_text, private_key)
+                pass_res = self.enc_password(encoded_text, private_key)
+                if not pass_res:
+                    return 0
                 outfile = open(self.OutputPath.text(), "w", encoding="utf-8")
                 outfile.write(encoded_text)
                 keyfile = open(self.OutputPath.text()[0:len(self.InputPath.text()) - 4] + "_key.txt", "w", encoding="utf-8")
                 keyfile.write(private_key)
             else:
-
                 if len(self.KeyPath.text()) <= 0:
                     self.notification("Input proper path to key")
                     return 0
@@ -369,7 +375,9 @@ class MainWindow(QMainWindow):
                 except:
                     self.call_error()
                     return 0
-                self.enc_password(encoded_text, private_key)
+                pass_res = self.enc_password(encoded_text, private_key)
+                if not pass_res:
+                    return 0
                 self.ManualOutput.setPlainText(encoded_text)
                 self.ManualKey.setPlainText(private_key)
             else:
